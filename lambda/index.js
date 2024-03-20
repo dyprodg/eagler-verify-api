@@ -18,9 +18,8 @@ exports.handler = async (event, context) => {
     const data = await secretsManager.getSecretValue({ SecretId: secretId }).promise();
     console.log(data)
     const secretString = data.SecretString;
-    console.log(secretString)
-    const secret = JSON.parse(secretString);
-    console.log(secret)
+    console.log(secretString.POSTGRES_URL)
+
   } catch (error) {
     console.error(`Error fetching secret: ${error}`);
     return {
