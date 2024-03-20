@@ -40,7 +40,7 @@ variable "secret_id" {
 
 variable "secret_arn" {
   description = "The ARN of the secret in AWS Secrets Manager"
-  default     = "arn:aws:secretsmanager::283919506801:secret:eagler-secrets-A8629Z"
+  default     = "arn:aws:secretsmanager:eu-central-1:283919506801:secret:eagler-secrets-A8629Z"
 }
 
 variable "github_connection" {
