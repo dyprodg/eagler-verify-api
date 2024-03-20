@@ -11,13 +11,16 @@ exports.handler = async (event, context) => {
   }
   const secretsManager = new AWS.SecretsManager();
   const secretId = process.env.SECRET_ID;
-
+  console.log(secretId)
 
   let secret;
   try {
     const data = await secretsManager.getSecretValue({ SecretId: secretId }).promise();
+    console.log(data)
     const secretString = data.SecretString;
+    console.log(secretString)
     const secret = JSON.parse(secretString);
+    console.log(secret)
   } catch (error) {
     console.error(`Error fetching secret: ${error}`);
     return {
@@ -32,7 +35,7 @@ exports.handler = async (event, context) => {
     };
   }
 
-  console.log(secret)
+
 
   const connectionString = secret.POSTGRES_URL
   if (!connectionString) {
