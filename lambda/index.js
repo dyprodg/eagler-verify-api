@@ -49,9 +49,10 @@ exports.handler = async (event, context) => {
     await client.connect();
     console.log('Connected to the database!');
     const res = await client.query(
-      'UPDATE "User" SET emailVerified = true, emailVerifiedToken = null WHERE emailVerifiedToken = $1',
-      [token]
-    );
+        'UPDATE "User" SET "emailVerified" = true, "emailVerifiedToken" = null WHERE "emailVerifiedToken" = $1',
+        [token]
+      );
+  
   } catch (error) {
     console.error('Error initializing PG Client:', error);
     return {
