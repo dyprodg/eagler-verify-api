@@ -30,4 +30,5 @@ terraform.rc
 
 lambda_function_payloads/
 lambda/node_modules/
+lambda/package-lock.json
 lambda_function_payload.zip

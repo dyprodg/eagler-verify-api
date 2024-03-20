@@ -3,7 +3,6 @@ version: 0.2
 phases:
   pre_build:
     commands:
-      - ls -R
       - cd lambda
       - echo Installing source NPM dependencies...
       - npm install
@@ -11,6 +10,7 @@ phases:
   build:
     commands:
       - echo Zipping the Lambda function code...
+      - npx prisma generate
       - zip -r lambda_function_payload.zip .
 
   post_build:
