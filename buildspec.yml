@@ -17,4 +17,4 @@ phases:
     commands:
       - echo Build completed
       - echo Deploying Lambda function...
-      - aws lambda update-function-code --function-name lambda_function_name --zip-file fileb://lambda_function_payload.zip
+      - aws lambda update-function-code --function-name eagler-lambda-verify-mail --zip-file fileb://lambda_function_payload.zip
