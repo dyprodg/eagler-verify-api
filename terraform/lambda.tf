@@ -57,7 +57,7 @@ resource "aws_lambda_function" "lambda" {
   # Define environment variables for the Lambda function.
   environment {
     variables = {
-      SECRET_ID = var.secret_id  # Set the environment variable for the secret ID.
+      SECRET_ID = var.secret_arn  # Set the environment variable for the secret ID.
     }
   }
 
