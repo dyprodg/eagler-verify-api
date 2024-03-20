@@ -18,8 +18,11 @@ exports.handler = async (event, context) => {
     const data = await secretsManager.getSecretValue({ SecretId: secretId }).promise();
     console.log('secretdata', data);
     const secretString = data.SecretString;
-    console.log('pg-url',secretString.POSTGRES_URL);
-    secret = JSON.parse(secretString); 
+    console.log('secretstring', secretString);
+
+    
+    secret = JSON.parse(secretString); // Removed redeclaration of secret
+    console.log('secret', secret);
   } catch (error) {
     console.error(`Error fetching secret: ${error}`);
     return {
