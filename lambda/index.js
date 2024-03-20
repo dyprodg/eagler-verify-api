@@ -1,4 +1,4 @@
-const { PrismaClient } = require('@prisma/client');
+const { Client } = require('pg');
 const execAsync = require('child_process').exec;
 
 exports.handler = async (event, context) => {
@@ -21,24 +21,38 @@ exports.handler = async (event, context) => {
     };
   }
 
-  let prisma;
-  try {
-    prisma = new PrismaClient({
-      datasources: {
-        db: {
-          url: secret.DATABASE_URL
-        }
-      }
-    });
-  } catch (error) {
-    console.error('Error initializing Prisma Client:', error);
-    return {
-      statusCode: 405,
-      body: JSON.stringify({ message: 'Error initializing Prisma Client' })
-    };
-  }
+  const client = new Client({
+    connectionString: secret.POSTGRES_URL,
+  });
 
-  // Use Prisma Client to connect to the database and perform operations
-  // For example, to fetch all users:
-  // const users = await prisma.user.findMany();
+
+
+    try {
+            await client.connect((err) => {
+                if (err) {
+                console.error('Error connecting to the database:', err);
+                } else {
+                console.log('Connected to the database!');
+                }
+            });
+            const res = await client.query(
+                'UPDATE user SET email_verified = true, email_verified_token = null WHERE email_verified_token = $1',
+                [token]
+            );
+            
+
+    } catch (error) {
+        console.error('Error initializing Prisma Client:', error);
+        return {
+        statusCode: 405,
+        body: JSON.stringify({ message: 'Error initializing Prisma Client' })
+        };
+    } finally {
+        await client.end();
+    }
+
+  return {
+    statusCode: 200,
+    body: JSON.stringify({ message: 'Email verified' })
+  };
 };
