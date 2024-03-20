@@ -16,13 +16,9 @@ exports.handler = async (event, context) => {
   let secret;
   try {
     const data = await secretsManager.getSecretValue({ SecretId: secretId }).promise();
-    console.log('secretdata', data);
     const secretString = data.SecretString;
-    console.log('secretstring', secretString);
+    secret = JSON.parse(secretString); 
 
-    
-    secret = JSON.parse(secretString); // Removed redeclaration of secret
-    console.log('secret', secret);
   } catch (error) {
     console.error(`Error fetching secret: ${error}`);
     return {
@@ -53,7 +49,7 @@ exports.handler = async (event, context) => {
     await client.connect();
     console.log('Connected to the database!');
     const res = await client.query(
-      'UPDATE "user" SET email_verified = true, email_verified_token = null WHERE email_verified_token = $1',
+      'UPDATE "User" SET emailVerified = true, emailVerifiedToken = null WHERE emailVerifiedToken = $1',
       [token]
     );
   } catch (error) {
