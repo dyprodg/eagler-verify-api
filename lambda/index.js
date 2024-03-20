@@ -9,18 +9,17 @@ exports.handler = async (event, context) => {
       body: JSON.stringify({ message: 'Token missing' })
     };
   }
+
   const secretsManager = new AWS.SecretsManager();
   const secretId = process.env.SECRET_ID;
-  console.log(secretId)
 
   let secret;
   try {
     const data = await secretsManager.getSecretValue({ SecretId: secretId }).promise();
-    console.log('secretdata',data)
+    console.log('secretdata', data);
     const secretString = data.SecretString;
-    console.log('secretstring',secretString)
-    const secret = JSON.parse(secretString);
-    console.log('secret',secret)
+    console.log('pg-url',secretString.POSTGRES_URL);
+    secret = JSON.parse(secretString); 
   } catch (error) {
     console.error(`Error fetching secret: ${error}`);
     return {
@@ -35,9 +34,7 @@ exports.handler = async (event, context) => {
     };
   }
 
-
-
-  const connectionString = secret.POSTGRES_URL
+  const connectionString = secret.POSTGRES_URL;
   if (!connectionString) {
     return {
       statusCode: 406,
@@ -49,31 +46,22 @@ exports.handler = async (event, context) => {
     connectionString: connectionString
   });
 
-
-
-    try {
-            await client.connect((err) => {
-                if (err) {
-                console.error('Error connecting to the database:', err);
-                } else {
-                console.log('Connected to the database!');
-                }
-            });
-            const res = await client.query(
-                'UPDATE user SET email_verified = true, email_verified_token = null WHERE email_verified_token = $1',
-                [token]
-            );
-            
-
-    } catch (error) {
-        console.error('Error initializing PG Client:', error);
-        return {
-        statusCode: 405,
-        body: JSON.stringify({ message: 'Error initializing Prisma Client' })
-        };
-    } finally {
-        await client.end();
-    }
+  try {
+    await client.connect();
+    console.log('Connected to the database!');
+    const res = await client.query(
+      'UPDATE "user" SET email_verified = true, email_verified_token = null WHERE email_verified_token = $1',
+      [token]
+    );
+  } catch (error) {
+    console.error('Error initializing PG Client:', error);
+    return {
+      statusCode: 405,
+      body: JSON.stringify({ message: 'Error initializing PG Client' })
+    };
+  } finally {
+    await client.end();
+  }
 
   return {
     statusCode: 200,
