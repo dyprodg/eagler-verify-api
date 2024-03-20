@@ -3,6 +3,7 @@ version: 0.2
 phases:
   pre_build:
     commands:
+      - ls -R
       - cd lambda
       - echo Installing source NPM dependencies...
       - npm install
