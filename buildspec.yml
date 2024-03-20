@@ -9,8 +9,10 @@ phases:
 
   build:
     commands:
-      - echo Zipping the Lambda function code...
+      - echo start prisma client
       - npx prisma generate
+
+      - echo Zipping the Lambda function code...
       - zip -r lambda_function_payload.zip .
 
   post_build:
