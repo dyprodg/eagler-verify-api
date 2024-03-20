@@ -1,0 +1,24 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 18
+
+  pre_build:
+    commands:
+      - echo Installing source NPM dependencies...
+      - cd lambda
+      - npm install
+      - cd ..
+
+  build:
+    commands:
+      - echo Zipping the Lambda function code...
+      - zip -r lambda_function_payload.zip lambda
+
+  post_build:
+    commands:
+      - echo Build completed
+      - echo Deploying Lambda function...
+      - aws lambda update-function-code --function-name lambda_function_name --zip-file fileb://lambda_function_payload.zip
