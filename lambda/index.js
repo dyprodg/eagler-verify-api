@@ -66,7 +66,7 @@ exports.handler = async (event, context) => {
   // ...
 
   return {
-    statusCode: 200,
+    statusCode: 302,
     headers: {
       'Location': 'https://justanothersocialmedia.net/email-verified',
     },
