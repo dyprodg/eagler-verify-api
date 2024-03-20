@@ -17,12 +17,23 @@ exports.handler = async (event, context) => {
     console.error(`Error fetching secret: ${error}`);
     return {
       statusCode: 401,
+      body: JSON.stringify({ message: 'Error fetching secret' })
+    };
+  }
+  if (!secret) {
+    return {
+      statusCode: 403,
       body: JSON.stringify({ message: 'Secret missing' })
     };
   }
 
   const connectionString = secret.POSTGRES_URL
-  console.log(connectionString) 
+  if (!connectionString) {
+    return {
+      statusCode: 406,
+      body: JSON.stringify({ message: 'Connection string missing' })
+    };
+  }
 
   const client = new Client({
     connectionString: connectionString
@@ -45,7 +56,7 @@ exports.handler = async (event, context) => {
             
 
     } catch (error) {
-        console.error('Error initializing Prisma Client:', error);
+        console.error('Error initializing PG Client:', error);
         return {
         statusCode: 405,
         body: JSON.stringify({ message: 'Error initializing Prisma Client' })
