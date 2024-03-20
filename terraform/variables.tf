@@ -1,16 +1,16 @@
 variable "region" {
   description = "The AWS region"
-  default     = "us-west-1"
+  default     = "eu-central-1"
 }
 
 variable "api_name" {
   description = "The name of the API Gateway"
-  default     = "MyAPI"
+  default     = "eagler-api-verify-mail"
 }
 
 variable "lambda_function_name" {
   description = "The name of the Lambda function"
-  default     = "lambda_function_name"
+  default     = "eagler-lambda-verify-mail"
 }
 
 variable "lambda_handler" {
@@ -35,22 +35,22 @@ variable "lambda_memory_size" {
 
 variable "secret_id" {
   description = "The ID of the secret in AWS Secrets Manager"
-  default     = "secret-id"
+  default     = "eagler-secrets-A8629Z"
 }
 
 variable "secret_arn" {
   description = "The ARN of the secret in AWS Secrets Manager"
-  default     = "secret-arn"
+  default     = "arn:aws:secretsmanager::283919506801:secret:eagler-secrets-A8629Z"
 }
 
 variable "github_connection" {
   description = "The connection to GitHub"
-  default     = "github-connection"
+  default     = "arn:aws:codestar-connections:eu-central-1:283919506801:connection/2eb166a7-605d-4e03-bb58-3c2d2af5da4e"
 }
 
 variable "github_repository" {
   description = "The GitHub repository"
-  default     = "repo-name"
+  default     = "dyprodg/eagler-verify-api"
 }
 
 variable "github_branch" {
@@ -60,38 +60,38 @@ variable "github_branch" {
 
 variable "build_project_name" {
   description = "The name of the CodeBuild project"
-  default     = "my-build-project"
+  default     = "eagler-build-verify-mail"
 }
 
 
 variable "s3_artifact_bucket_name" {
   description = "The name of the S3 bucket for the CodePipeline artifact"
-  default     = "my-artifact-bucket"
+  default     = "eagler-artifact-verify-bucket"
 }
 
 variable "codebuild_compute_type" {
   description = "The compute type of the CodeBuild project"
-  default     = "BUILD_GENERAL1_SMALL"
+  default     = "BUILD_LAMBDA_2GB"
 
 }
 
 variable "codebuild_image" {
   description = "The image of the CodeBuild project"
-  default     = "aws/codebuild/standard:7.0"
+  default     = "aws/codebuild/amazonlinux-x86_64-lambda-standard:nodejs18"
 
 }
 
 variable "codebuild_env_type" {
   description = "The environment type of the CodeBuild project"
-  default     = "LINUX_CONTAINER"
+  default     = "LINUX_LAMBDA_CONTAINER"
 }
 
 variable "build_log_group_name" {
   description = "The name of the CloudWatch Logs group"
-  default     = "my-build-log-group"
+  default     = "eagler-build-verify-mail"
 }
 
 variable "build_log_stream_name" {
   description = "The name of the CloudWatch Logs stream"
-  default     = "my-build-log-stream"
+  default     = "eagler-build-verify-mail"
 }

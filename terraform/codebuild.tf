@@ -18,10 +18,9 @@ resource "aws_codebuild_project" "build" {
 
   # Define environment settings for the project.
   environment {
-    compute_type                = var.codebuild_compute_type  
-    image                       = var.codebuild_image  
-    type                        = var.codebuild_env_type  
-    image_pull_credentials_type = "CODEBUILD"  
+    compute_type                = var.codebuild_compute_type 
+    type                        = var.codebuild_env_type
+    image                       = var.codebuild_image
   }
 
   # Define logs configuration for the project.
@@ -81,7 +80,7 @@ resource "aws_iam_role_policy" "codebuild" {
       {
         "Effect" : "Allow",
         "Action" : "lambda:UpdateFunctionCode",
-        "Resource" : "${aws_iam_role.iam_for_lambda.arn}" 
+        "Resource" : "${aws_lambda_function.lambda.arn}" 
       },
     ]
   })

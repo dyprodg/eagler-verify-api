@@ -5,10 +5,10 @@ provider "aws" {
 
 terraform {
   backend "s3" {
-    bucket         = "state-bucket-name"
+    bucket         = "eagler-verify-api-terraform-state"
     key            = "terraform.tfstate"
     region         = "eu-central-1"
-    dynamodb_table = "state-table"
+    dynamodb_table = "eagler-verify-api-terraform-lock"
     encrypt        = true
   }
 }
