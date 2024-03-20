@@ -3,15 +3,14 @@ version: 0.2
 phases:
   pre_build:
     commands:
-      - cd lambda
-      - echo Installing source NPM dependencies...
-      - npm install
+      - echo prebuildphase
 
   build:
     commands:
-      - echo start prisma client
-      - npx prisma generate
-
+      - cd lambda
+      - ls -R
+      - echo Installing source NPM dependencies...
+      - npm install
       - echo Zipping the Lambda function code...
       - zip -r lambda_function_payload.zip .
 
