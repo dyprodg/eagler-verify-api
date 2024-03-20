@@ -1,21 +1,15 @@
 version: 0.2
 
 phases:
-  install:
-    runtime-versions:
-      nodejs: 18
-
   pre_build:
     commands:
       - echo Installing source NPM dependencies...
-      - cd lambda
       - npm install
-      - cd ..
 
   build:
     commands:
       - echo Zipping the Lambda function code...
-      - zip -r lambda_function_payload.zip lambda
+      - zip -r lambda_function_payload.zip .
 
   post_build:
     commands:

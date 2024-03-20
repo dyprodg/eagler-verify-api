@@ -1,7 +1,7 @@
 #!/bin/bash
 
-s3_bucket_name="my-terraform-state-bucket-dyprodg-12334"
-dynamodb_table_name="terraform-api-state"
+s3_bucket_name="eagler-verify-api-terraform-state"
+dynamodb_table_name="eagler-verify-api-terraform-lock"
 aws_region="eu-central-1"
 
 # Create the S3 bucket
