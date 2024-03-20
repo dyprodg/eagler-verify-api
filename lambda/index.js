@@ -1,5 +1,5 @@
 const { Client } = require('pg');
-const execAsync = require('child_process').exec;
+const AWS = require('aws-sdk');
 
 exports.handler = async (event, context) => {
   const { token } = event.queryStringParameters;
@@ -9,10 +9,15 @@ exports.handler = async (event, context) => {
       body: JSON.stringify({ message: 'Token missing' })
     };
   }
+  const secretsManager = new AWS.SecretsManager();
+  const secretId = process.env.SECRET_ID;
+
 
   let secret;
   try {
-    secret = await execAsync(`aws secretsmanager get-secret-value --secret-id ${process.env.SECRET_ID}`);
+    const data = await secretsManager.getSecretValue({ SecretId: secretId }).promise();
+    const secretString = data.SecretString;
+    const secret = JSON.parse(secretString);
   } catch (error) {
     console.error(`Error fetching secret: ${error}`);
     return {
@@ -28,7 +33,7 @@ exports.handler = async (event, context) => {
   }
 
   console.log(secret)
-  
+
   const connectionString = secret.POSTGRES_URL
   if (!connectionString) {
     return {
