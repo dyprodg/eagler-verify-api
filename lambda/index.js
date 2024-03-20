@@ -27,6 +27,8 @@ exports.handler = async (event, context) => {
     };
   }
 
+  console.log(secret)
+  
   const connectionString = secret.POSTGRES_URL
   if (!connectionString) {
     return {
