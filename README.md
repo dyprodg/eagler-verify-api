@@ -62,7 +62,7 @@ Once you're done with the first version or left the demo as it is, run the deplo
 
 If everything was successfull try the curl request with the provided Staging URL
 ```bash
-curl "STAGINGURL/verify?token=asdfasdf"
+curl "https://nlg6614mrd.execute-api.eu-central-1.amazonaws.com/prod/verify?token=asdfasdf"
 ```
 
 If you want to make some changes to the code now, you only have to push your repo. The pipeline should do the rest.
