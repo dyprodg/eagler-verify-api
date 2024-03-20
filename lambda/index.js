@@ -21,8 +21,11 @@ exports.handler = async (event, context) => {
     };
   }
 
+  const connectionString = secret.POSTGRES_URL
+  console.log(connectionString) 
+
   const client = new Client({
-    connectionString: secret.POSTGRES_URL,
+    connectionString: connectionString
   });
 
 
