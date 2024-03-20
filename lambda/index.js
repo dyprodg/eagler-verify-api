@@ -63,8 +63,13 @@ exports.handler = async (event, context) => {
     await client.end();
   }
 
+  // ...
+
   return {
     statusCode: 200,
+    headers: {
+      'Location': 'https://justanothersocialmedia.net/email-verified',
+    },
     body: JSON.stringify({ message: 'Email verified' })
   };
 };
